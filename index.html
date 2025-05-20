@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Linking external CSS -->
+</head>
+
+<body>
+    <div class="container">
+        <header class="hero">
+            <h1>Welcome to My Portfolio</h1>
+            <p>Hi, I'm  Dhruv Bari. Explore my journey and aspirations!</p>
+        </header>
+
+        <section id="welcome" class="section">
+            <h2>Welcome</h2>
+            <div class="media">
+                <img src="dhruv.jpeg" alt="Profile photo of Dhruv Bari" class="profile-photo">
+                <video controls class="intro-video">
+                    <source src="images/Web Design Promotional Video - After Effects Template.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <h2>About Me</h2>
+            <p><strong>Name:</strong> Dhruv Bari </p>
+            <p><strong>Location:</strong> palghar</p>
+            <p><strong>Education:</strong> B tech Engineering pursuing in electronics and computer science</p>
+            <p><strong>Languages Known:</strong> Marathi English Hindi</p>
+        </section>
+
+        <section id="achievements" class="section">
+            <h2>Achievements</h2>
+            <ul>
+                <li>.net course completed</li>
+                <li> 4 th in the blind c </li>
+
+            </ul>
+        </section>
+
+        <section id="goals" class="section">
+            <h2>Future Goals</h2>
+            <p> focus on mastering a full-stack JavaScript stack (React, Node, PostgreSQL) by completing an online course and rebuilding three classic apps, while pushing code to GitHub daily; ship two polished portfolio projects that solve real problems
+                and include tests, CI/CD, and live demos; contribute at least five pull requests to open-source repos; practice 200 LeetCode problems plus weekly mock interviews to nail data-structures, algorithms, and system design; craft an ATS-ready
+                one-page résumé and showcase projects on LinkedIn; attend three dev meetups per semester and follow up with new contacts; apply to 15 internships or freelance gigs each month until placed; stay current with a weekly tech newsletter and
+                publish a monthly blog post, all while scheduling regular exercise and one screen-free day each month to prevent burnout and keep motivation high.</p>
+        </section>
+
+        <section id="personal" class="section">
+            <h2>Personal Side</h2>
+            <p><strong>Hobbies:</strong> In my downtime, you’ll usually find me gaming—whether it’s competitive shooters or story-driven adventures—or diving into music, headphones on and playlists spanning everything from lo-fi chill to upbeat EDM.</p>
+            <p><strong>Role Models:</strong> My role model is Elon Musk because he consistently turns bold, seemingly impossible ideas—reusable rockets, mass-market EVs, global satellite internet—into reality by pairing relentless curiosity with calculated
+                risk-taking, proving that audacious vision backed by deep technical engagement and a “first-principles” mindset can reshape entire industries and push humanity forward.</p>
+            <p><strong>Favorite Books:</strong> Rich Dad Poor Dad” because it flips the usual script on money: instead of glorifying high salaries, it teaches how assets, smart investing, and financial literacy create real freedom—turning complex finance
+                ideas into simple, relatable stories that stick with you long after you close the book.</p>
+
+            <div class="favorites">
+                <h3>Favorite Websites/Startups</h3>
+                <p><strong>GitHub:</strong> The social network for developers where projects live, collaboration is seamless, and your portfolio speaks louder than any résumé.</p>
+                <p><strong>Spotify:</strong> Friction-free music discovery with personalized playlists that nail your mood and make long coding sessions fly by.</p>
+                <p><strong>Notion:</strong> An all-in-one digital workspace that turns chaotic notes, tasks, and docs into a clean, customizable command center.</p>
+                <p><strong>SpaceX:</strong> Musk’s reusable-rocket pioneer that makes space feel less like sci-fi and more like tomorrow’s commute, proving bold engineering can rewrite the rulebook.</p>
+            </div>
+
+            <p><strong>Volunteering Experience:</strong> not yet </p>
+        </section>
+
+        <footer class="footer">
+            <p>Contact me at <a href="dhruvbari1234@gmail.com" class="email-btn">dhruvbari1234@gmail.com</a></p>
+        </footer>
+    </div>
+    <script>
+        // Fade-in sections on scroll
+        const sections = document.querySelectorAll('.section');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.15
+        });
+
+        sections.forEach(section => {
+            section.classList.add('fade-section');
+            observer.observe(section);
+        });
+
+        // Profile photo hover effect
+        const photo = document.querySelector('.profile-photo');
+        if (photo) {
+            photo.addEventListener('mouseenter', () => {
+                photo.classList.add('photo-pop');
+            });
+            photo.addEventListener('mouseleave', () => {
+                photo.classList.remove('photo-pop');
+            });
+        }
+    </script>
+</body>
+
+</html>
