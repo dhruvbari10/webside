@@ -1,112 +1,465 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Manthan Gharat - Portfolio, Education, Goals, Achievements" />
+    <meta name="author" content="Manthan Gharat" />
+    <meta property="og:title" content="Manthan Gharat Portfolio" />
+    <meta property="og:image" content="images/IMG_20241204_0001.jpg" />
+    <meta property="og:description" content="Personal introduction portfolio site." />
+    <meta name="theme-color" content="#ffffff" />
     <title>My Portfolio</title>
+   <link rel="icon" href="im/android-chrome-192x192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <!-- Linking external CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    <!-- Add Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Navbar entrance animation */
+    .navbar-animate {
+      opacity: 0;
+      transform: translateY(-40px);
+      transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    .navbar-animate.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Brand gradient text on hover */
+    .brand-gradient {
+      background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: background 0.4s;
+    }
+    .brand-gradient:hover {
+      background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    /* Hamburger tap animation */
+    .tap:active {
+      transform: scale(0.9);
+    }
+    /* Section fade-in animation */
+    .fade-section {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+    }
+    .fade-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Card hover animation */
+    .card-animate {
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1), box-shadow 0.4s cubic-bezier(.4,0,.2,1);
+    }
+    .card-animate:hover {
+      transform: translateY(-8px) scale(1.03) rotate(-1deg);
+      box-shadow: 0 10px 32px 0 rgba(59,130,246,0.15);
+    }
+    /* Button pulse animation */
+    .btn-animate {
+      transition: transform 0.2s cubic-bezier(.4,0,.2,1), box-shadow 0.2s;
+    }
+    .btn-animate:hover {
+      transform: scale(1.07) translateY(-2px);
+      box-shadow: 0 4px 16px 0 rgba(59,130,246,0.15);
+    }
+    /* Image pop animation */
+    .img-animate {
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1), box-shadow 0.4s;
+    }
+    .img-animate:hover {
+      transform: scale(1.08) rotate(-2deg);
+      box-shadow: 0 8px 32px 0 rgba(59,130,246,0.18);
+    }
+    /* Link underline animation */
+    .link-animate {
+      position: relative;
+      transition: color 0.2s;
+    }
+    .link-animate::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+      transform: scaleX(0);
+      transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+      transform-origin: left;
+    }
+    .link-animate:hover::after {
+      transform: scaleX(1);
+    }
+    html {
+  scroll-behavior: smooth;
+}
+  </style>
 </head>
+<body class="bg-gradient-to-br from-blue-100 to-blue-200 text-gray-900 font-sans">
+  <!-- Loader -->
+  <div id="loader" class="fixed inset-0 bg-white flex items-center justify-center z-50">
+    <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-600"></div>
+  </div>
 
-<body>
-    <div class="container">
-        <header class="hero">
-            <h1>Welcome to My Portfolio</h1>
-            <p>Hi, I'm  Dhruv Bari. Explore my journey and aspirations!</p>
-        </header>
+  <!-- Sticky Navbar -->
+  <nav id="main-navbar" class="navbar-animate sticky top-0 z-50 bg-white/70 backdrop-blur-lg shadow-lg flex justify-between items-center px-6 py-4 mb-10 rounded-b-2xl border-b border-blue-200 transition-all duration-300">
+    <a href="#" class="brand-gradient font-extrabold text-2xl tracking-widest hover:drop-shadow-xl transition-all duration-300">
+      Dhruv Portfolio
+    </a>
+    <!-- Hamburger Icon (hidden on md+) -->
+    <button id="menu-btn" class="md:hidden block focus:outline-none p-2 rounded hover:bg-blue-100 transition tap" aria-label="Open navigation">
+      <svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+    <!-- Overlay for mobile menu -->
+    <div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-40 z-40 transition-opacity duration-300 opacity-0 pointer-events-none md:hidden"></div>
+    <!-- Nav Items -->
+    <ul
+      id="nav-items"
+      class="flex gap-6 text-blue-800 font-semibold
+             md:flex flex-col md:flex-row
+             fixed md:static top-0 right-0 h-full w-3/4 max-w-xs bg-white/95 md:bg-transparent shadow-lg md:shadow-none
+             rounded-l-2xl md:rounded-none px-8 md:px-0 py-16 md:py-0 z-50
+             transform translate-x-full md:translate-x-0 transition-transform duration-300"
+    >
+      <!-- Back button (only visible on mobile menu) -->
+      <li class="block md:hidden mb-8">
+        <button id="menu-back" class="flex items-center gap-2 text-blue-700 font-semibold hover:text-blue-900 transition">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          Back
+        </button>
+      </li>
+      <li><a href="#home" class="hover:text-blue-600 hover:scale-110 transition-transform duration-200 link-animate">Home</a></li>
+      <li><a href="#about" class="hover:text-blue-600 hover:scale-110 transition-transform duration-200 link-animate">About</a></li>
+      <li><a href="#projects" class="hover:text-blue-600 hover:scale-110 transition-transform duration-200 link-animate">Projects</a></li>
+      <li><a href="#goals" class="hover:text-blue-600 hover:scale-110 transition-transform duration-200 link-animate">Goals</a></li>
+      <li><a href="#contact" class="hover:text-blue-600 hover:scale-110 transition-transform duration-200 link-animate">Contact</a></li>
+    </ul>
+  </nav>
 
-        <section id="welcome" class="section">
-            <h2>Welcome</h2>
-            <div class="media">
-                <img src="dhruv.jpeg" alt="Profile photo of Dhruv Bari" class="profile-photo">
-                <video controls class="intro-video">
-                    <source src="images/Web Design Promotional Video - After Effects Template.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-        </section>
-
-        <section id="about" class="section">
-            <h2>About Me</h2>
-            <p><strong>Name:</strong> Dhruv Bari </p>
-            <p><strong>Location:</strong> palghar</p>
-            <p><strong>Education:</strong> B tech Engineering pursuing in electronics and computer science</p>
-            <p><strong>Languages Known:</strong> Marathi English Hindi</p>
-        </section>
-
-        <section id="achievements" class="section">
-            <h2>Achievements</h2>
-            <ul>
-                <li>.net course completed</li>
-                <li> 4 th in the blind c </li>
-
-            </ul>
-        </section>
-
-        <section id="goals" class="section">
-            <h2>Future Goals</h2>
-            <p> focus on mastering a full-stack JavaScript stack (React, Node, PostgreSQL) by completing an online course and rebuilding three classic apps, while pushing code to GitHub daily; ship two polished portfolio projects that solve real problems
-                and include tests, CI/CD, and live demos; contribute at least five pull requests to open-source repos; practice 200 LeetCode problems plus weekly mock interviews to nail data-structures, algorithms, and system design; craft an ATS-ready
-                one-page résumé and showcase projects on LinkedIn; attend three dev meetups per semester and follow up with new contacts; apply to 15 internships or freelance gigs each month until placed; stay current with a weekly tech newsletter and
-                publish a monthly blog post, all while scheduling regular exercise and one screen-free day each month to prevent burnout and keep motivation high.</p>
-        </section>
-
-        <section id="personal" class="section">
-            <h2>Personal Side</h2>
-            <p><strong>Hobbies:</strong> In my downtime, you’ll usually find me gaming—whether it’s competitive shooters or story-driven adventures—or diving into music, headphones on and playlists spanning everything from lo-fi chill to upbeat EDM.</p>
-            <p><strong>Role Models:</strong> My role model is Elon Musk because he consistently turns bold, seemingly impossible ideas—reusable rockets, mass-market EVs, global satellite internet—into reality by pairing relentless curiosity with calculated
-                risk-taking, proving that audacious vision backed by deep technical engagement and a “first-principles” mindset can reshape entire industries and push humanity forward.</p>
-            <p><strong>Favorite Books:</strong> Rich Dad Poor Dad” because it flips the usual script on money: instead of glorifying high salaries, it teaches how assets, smart investing, and financial literacy create real freedom—turning complex finance
-                ideas into simple, relatable stories that stick with you long after you close the book.</p>
-
-            <div class="favorites">
-                <h3>Favorite Websites/Startups</h3>
-                <p><strong>GitHub:</strong> The social network for developers where projects live, collaboration is seamless, and your portfolio speaks louder than any résumé.</p>
-                <p><strong>Spotify:</strong> Friction-free music discovery with personalized playlists that nail your mood and make long coding sessions fly by.</p>
-                <p><strong>Notion:</strong> An all-in-one digital workspace that turns chaotic notes, tasks, and docs into a clean, customizable command center.</p>
-                <p><strong>SpaceX:</strong> Musk’s reusable-rocket pioneer that makes space feel less like sci-fi and more like tomorrow’s commute, proving bold engineering can rewrite the rulebook.</p>
-            </div>
-
-            <p><strong>Volunteering Experience:</strong> not yet </p>
-        </section>
-
-        <footer class="footer">
-            <p>Contact me at <a href="dhruvbari1234@gmail.com" class="email-btn">dhruvbari1234@gmail.com</a></p>
-        </footer>
+  <!-- Hero Section -->
+  <section id="home" class="flex flex-col md:flex-row items-center gap-8 mb-12 px-4 fade-section">
+    <img src="dhruv.jpg" alt="Profile photo of Manthan Gharat"
+      class="profile-photo img-animate w-40 h-40 rounded-full border-4 border-blue-300 shadow-lg object-cover transition-transform duration-200 hover:scale-105 hover:-rotate-2" />
+    <div>
+      <h1 class="text-4xl md:text-5xl font-bold mb-2 tracking-wide">Hi, I'm Dhruv Bari</h1>
+      <p class="text-lg text-gray-700 mb-4 max-w-xl">Aspiring Full Stack Developer | B.Tech in electronics and Computer science Engineering | Passionate about building elegant, impactful web solutions.</p>
+      <div class="flex gap-4 mt-2">
+        <a href="https://github.com/" target="_blank" class="hover:text-gray-700 link-animate">GitHub</a>
+        <a href="https://linkedin.com/in/" target="_blank" class="hover:text-blue-700 link-animate">LinkedIn</a>
+        <a href="https://instagram.com/" target="_blank" class="hover:text-pink-600 link-animate">Instagram</a>
+      </div>
     </div>
-    <script>
-        // Fade-in sections on scroll
-        const sections = document.querySelectorAll('.section');
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, {
-            threshold: 0.15
-        });
+  </section>
 
-        sections.forEach(section => {
-            section.classList.add('fade-section');
-            observer.observe(section);
-        });
+  <!-- Intro Video Section -->
+  <section id="intro-video" class="flex flex-col items-center justify-center mb-12 px-4 fade-section">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-4">Intro Video</h2>
+    <video controls class="rounded-xl shadow-lg w-full max-w-xl bg-black img-animate">
+      <source src="Web Design Promotional Video - After Effects Template.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </section>
 
-        // Profile photo hover effect
-        const photo = document.querySelector('.profile-photo');
-        if (photo) {
-            photo.addEventListener('mouseenter', () => {
-                photo.classList.add('photo-pop');
-            });
-            photo.addEventListener('mouseleave', () => {
-                photo.classList.remove('photo-pop');
-            });
+  <!-- About Me Section -->
+  <section id="about" class="bg-white/90 rounded-xl shadow p-8 mb-12 max-w-3xl mx-auto fade-section">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-4">About Me</h2>
+    <p class="mb-2"><strong>Name:</strong> Dhruv Bari</p>
+    <p class="mb-2"><strong>Location:</strong> Palghar</p>
+    <p class="mb-2"><strong>Education:</strong> B.Tech in electronics and Computer science Engineering  (pursuing)</p>
+    <p class="mb-2"><strong>Languages Known:</strong> Marathi, English, Hindi</p>
+    <p class="mb-2">I love learning new technologies, solving problems, and collaborating on meaningful projects. My goal is to become a skilled full-stack developer and contribute to impactful products.</p>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="relative bg-gradient-to-br from-purple-50 via-blue-50 to-white border-l-4 border-purple-400 rounded-xl mb-8 p-8 shadow-lg fade-section">
+    <div class="absolute left-0 top-6 flex items-center justify-center w-8 h-8 bg-purple-400 text-white rounded-full shadow -translate-x-1/2">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 0 1-8 0"></path><circle cx="12" cy="12" r="10"></circle></svg>
+    </div>
+    <h2 class="text-purple-700 mb-4 text-3xl font-extrabold tracking-wide pl-10" style="font-family: 'Montserrat', sans-serif;">
+      Skills
+    </h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 pl-10" style="font-family: 'Inter', sans-serif;">
+      <div>
+        <span class="font-semibold">HTML</span>
+        <div class="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+          <div class="bg-blue-500 h-2.5 rounded-full" style="width: 95%"></div>
+        </div>
+      </div>
+      <div>
+        <span class="font-semibold">CSS/Tailwind</span>
+        <div class="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+          <div class="bg-blue-400 h-2.5 rounded-full" style="width: 90%"></div>
+        </div>
+      </div>
+      <div>
+        <span class="font-semibold">JavaScript</span>
+        <div class="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+          <div class="bg-yellow-400 h-2.5 rounded-full" style="width: 85%"></div>
+        </div>
+      </div>
+      <div>
+        <span class="font-semibold">React</span>
+        <div class="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+          <div class="bg-blue-300 h-2.5 rounded-full" style="width: 75%"></div>
+        </div>
+      </div>
+      <div>
+        <span class="font-semibold">Node.js</span>
+        <div class="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+          <div class="bg-green-400 h-2.5 rounded-full" style="width: 70%"></div>
+        </div>
+      </div>
+      <div>
+        <span class="font-semibold">Git/GitHub</span>
+        <div class="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+          <div class="bg-gray-500 h-2.5 rounded-full" style="width: 80%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="max-w-3xl mx-auto mb-12 px-4 fade-section">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-6 text-center">Projects</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 justify-items-center">
+      <!-- Example Project Card -->
+      <div class="bg-white rounded-xl shadow card-animate p-6 flex flex-col items-center group text-center w-full">
+        <img src="images/portfolio-thumb.jpg" alt="Portfolio Website Screenshot" class="w-24 h-16 object-cover rounded mb-3 img-animate" />
+        <h3 class="text-lg font-bold mb-2 group-hover:text-blue-600 transition">Portfolio Website</h3>
+        <p class="text-gray-600 mb-4">A responsive personal portfolio built with HTML, Tailwind CSS, and JavaScript, featuring dynamic data and a contact form.</p>
+        <a href="https://your-portfolio-link.com" target="_blank" class="mt-auto text-blue-500 hover:underline link-animate">View Project</a>
+      </div>
+      <div class="bg-white rounded-xl shadow card-animate p-6 flex flex-col items-center group text-center w-full">
+        <h3 class="text-lg font-bold mb-2 group-hover:text-blue-600 transition">Weather App</h3>
+        <p class="text-gray-600 mb-4">A simple weather dashboard using a public API, showing real-time weather for any city.</p>
+        <a href="#" class="mt-auto text-blue-500 hover:underline link-animate">View Project</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Goals Section -->
+  <section id="goals" class="relative bg-gradient-to-br from-blue-50 via-blue-100 to-white border-l-4 border-blue-400 rounded-xl mb-8 p-8 shadow-lg fade-section">
+    <div class="absolute left-0 top-6 flex items-center justify-center w-8 h-8 bg-blue-400 text-white rounded-full shadow -translate-x-1/2">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3"></path><circle cx="12" cy="12" r="10"></circle></svg>
+    </div>
+    <h2 class="text-blue-700 mb-4 text-3xl font-extrabold tracking-wide pl-10" style="font-family: 'Montserrat', sans-serif;">
+      Future Goals
+    </h2>
+    <p class="text-lg leading-relaxed text-gray-700 pl-10 font-light" style="font-family: 'Inter', sans-serif;">
+      Focus on mastering a full-stack JavaScript stack (React, Node, PostgreSQL) by completing an online course and rebuilding three classic apps, while pushing code to GitHub daily; ship two polished portfolio projects that solve real problems and include tests, CI/CD, and live demos; contribute at least five pull requests to open-source repos; practice 200 LeetCode problems plus weekly mock interviews to nail data-structures, algorithms, and system design; craft an ATS-ready one-page résumé and showcase projects on LinkedIn; attend three dev meetups per semester and follow up with new contacts; apply to 15 internships or freelance gigs each month until placed; stay current with a weekly tech newsletter and publish a monthly blog post, all while scheduling regular exercise and one screen-free day each month to prevent burnout and keep motivation high.
+    </p>
+  </section>
+
+  <!-- Hobbies Section (populated by JS) -->
+  <section id="hobbies" class="relative bg-gradient-to-br from-green-50 via-blue-50 to-white border-l-4 border-green-400 rounded-xl mb-8 p-8 shadow-lg fade-section">
+    <div class="absolute left-0 top-6 flex items-center justify-center w-8 h-8 bg-green-400 text-white rounded-full shadow -translate-x-1/2">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2a4 4 0 0 1 8 0v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+    </div>
+    <h2 class="text-green-700 mb-4 text-3xl font-extrabold tracking-wide pl-10" style="font-family: 'Montserrat', sans-serif;">
+      Hobbies
+    </h2>
+    <ul id="hobbies-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-10" style="font-family: 'Inter', sans-serif;"></ul>
+  </section>
+
+  <!-- Role Models Section -->
+  <section id="role-models" class="relative bg-gradient-to-br from-yellow-50 via-blue-50 to-white border-l-4 border-yellow-400 rounded-xl mb-8 p-8 shadow-lg fade-section">
+    <div class="absolute left-0 top-6 flex items-center justify-center w-8 h-8 bg-yellow-400 text-white rounded-full shadow -translate-x-1/2">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01"></path><circle cx="12" cy="12" r="10"></circle></svg>
+    </div>
+    <h2 class="text-yellow-700 mb-4 text-3xl font-extrabold tracking-wide pl-10" style="font-family: 'Montserrat', sans-serif;">
+      Role Models
+    </h2>
+    <p class="text-lg leading-relaxed text-gray-700 pl-10" style="font-family: 'Inter', sans-serif;">
+      My role model is Elon Musk because he consistently turns bold, seemingly impossible ideas—reusable rockets, mass-market EVs, global satellite internet—into reality by pairing relentless curiosity with calculated risk-taking, proving that audacious vision backed by deep technical engagement and a “first-principles” mindset can reshape entire industries and push humanity forward.
+    </p>
+  </section>
+
+  <!-- Favorite Books Section (populated by JS) -->
+  <section id="favorite-books" class="relative bg-gradient-to-br from-pink-50 via-blue-50 to-white border-l-4 border-pink-400 rounded-xl mb-8 p-8 shadow-lg fade-section">
+    <div class="absolute left-0 top-6 flex items-center justify-center w-8 h-8 bg-pink-400 text-white rounded-full shadow -translate-x-1/2">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 20l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M12 12V4l9 5-9 5-9-5 9-5z"></path></svg>
+    </div>
+    <h2 class="text-pink-700 mb-4 text-3xl font-extrabold tracking-wide pl-10" style="font-family: 'Montserrat', sans-serif;">
+      Favorite Books
+    </h2>
+    <ul id="books-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-10" style="font-family: 'Inter', sans-serif;"></ul>
+  </section>
+
+  <!-- Favorite Websites & Startups Section (populated by JS) -->
+  <section id="favorite-sites" class="relative bg-gradient-to-br from-indigo-50 via-blue-50 to-white border-l-4 border-indigo-400 rounded-xl mb-8 p-8 shadow-lg fade-section">
+    <div class="absolute left-0 top-6 flex items-center justify-center w-8 h-8 bg-indigo-400 text-white rounded-full shadow -translate-x-1/2">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3"></path><circle cx="12" cy="12" r="10"></circle></svg>
+    </div>
+    <h2 class="text-indigo-700 mb-4 text-3xl font-extrabold tracking-wide pl-10" style="font-family: 'Montserrat', sans-serif;">
+      Favorite Websites & Startups
+    </h2>
+    <ul id="sites-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-10" style="font-family: 'Inter', sans-serif;"></ul>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="relative bg-gradient-to-br from-orange-50 via-blue-50 to-white border-l-4 border-orange-400 rounded-xl mb-8 p-8 shadow-lg fade-section">
+    <div class="absolute left-0 top-6 flex items-center justify-center w-8 h-8 bg-orange-400 text-white rounded-full shadow -translate-x-1/2">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 16h10"></path><circle cx="12" cy="12" r="10"></circle></svg>
+    </div>
+    <h2 class="text-orange-700 mb-4 text-3xl font-extrabold tracking-wide pl-10" style="font-family: 'Montserrat', sans-serif;">Testimonials</h2>
+    <div class="pl-10">
+      <blockquote class="italic text-gray-700 mb-2"> quick learner Better obsevrvation</blockquote>
+      <span class="text-sm text-gray-500"></span>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="my-8 p-6 bg-white rounded-lg shadow-md max-w-2xl mx-auto fade-section">
+    <h2 class="text-2xl font-semibold mb-4">Contact Me</h2>
+    <ul class="space-y-2 mb-4">
+      <li><a href="tel:+917030209445" class="text-blue-600 hover:underline">📞 +91 7030209445</a></li>
+      <li><a href="https://wa.me/7030209445" target="_blank" class="text-green-600 hover:underline">💬 WhatsApp Chat</a></li>
+      <li><a href="mailto:122manthan2109@sjcem.edu.in" class="text-red-600 hover:underline">✉️ 122dhruv7044@sjcem.edu.in</a></li>
+      <li>
+        <iframe class="w-full h-48 rounded" src="https://www.google.com/maps?q=Palghar,+Maharashtra,+India&output=embed"></iframe>
+      </li>
+      <li class="flex space-x-4 mt-2">
+        <a href="https://github.com/" target="_blank" class="hover:text-gray-700 link-animate">GitHub</a>
+        <a href="https://linkedin.com/in/" target="_blank" class="hover:text-blue-700 link-animate">LinkedIn</a>
+        <a href="https://instagram.com/" target="_blank" class="hover:text-pink-600 link-animate">Instagram</a>
+        <a href="https://twitter.com/" target="_blank" class="hover:text-blue-400 link-animate">Twitter</a>
+      </li>
+    </ul>
+    <form action="https://formspree.io/f/xblobzre" method="POST" class="space-y-2">
+      <input type="text" name="name" placeholder="Your Name" required class="border p-2 rounded w-full">
+      <input type="email" name="email" placeholder="Your Email" required class="border p-2 rounded w-full">
+      <textarea name="message" placeholder="Your Message" required class="border p-2 rounded w-full"></textarea>
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 btn-animate">Send</button>
+    </form>
+  </section>
+
+  <footer class="text-center mt-8 py-4 bg-gradient-to-r from-blue-200 to-blue-400 text-gray-800 rounded-lg shadow fade-section">
+    <!-- Footer content -->
+  </footer>
+  <button id="scrollTopBtn" title="Go to top" class="fixed bottom-6 right-6 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition hidden z-50 btn-animate">
+    ↑
+  </button>
+  <script>
+    // Fade-in sections on scroll
+    const sections = document.querySelectorAll('.fade-section');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.15 });
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+    // Profile photo hover effect
+    const photo = document.querySelector('.profile-photo');
+    if(photo) {
+        photo.addEventListener('mouseenter', () => {
+            photo.classList.add('photo-pop');
+        });
+        photo.addEventListener('mouseleave', () => {
+            photo.classList.remove('photo-pop');
+        });
+    }
+
+    // Animate loader fade out
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      loader.style.transition = 'opacity 0.6s cubic-bezier(.4,0,.2,1)';
+      loader.style.opacity = 0;
+      setTimeout(() => loader.style.display = 'none', 600);
+    });
+
+    // Animate navbar on load
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('main-navbar').classList.add('visible');
+    });
+
+    // Hamburger menu toggle (slide in from right on mobile)
+    const menuBtn = document.getElementById('menu-btn');
+    const navItems = document.getElementById('nav-items');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const menuBack = document.getElementById('menu-back');
+
+    function openMenu() {
+      navItems.classList.remove('translate-x-full');
+      navItems.classList.add('translate-x-0');
+      menuOverlay.classList.remove('opacity-0', 'pointer-events-none');
+      menuOverlay.classList.add('opacity-100');
+    }
+    function closeMenu() {
+      navItems.classList.add('translate-x-full');
+      navItems.classList.remove('translate-x-0');
+      menuOverlay.classList.add('opacity-0', 'pointer-events-none');
+      menuOverlay.classList.remove('opacity-100');
+    }
+
+    if (menuBtn && navItems && menuOverlay) {
+      menuBtn.addEventListener('click', openMenu);
+      menuOverlay.addEventListener('click', closeMenu);
+    }
+    if (menuBack) {
+      menuBack.addEventListener('click', closeMenu);
+    }
+
+    // Scroll-to-top button
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollBtn.classList.remove('hidden');
+      } else {
+        scrollBtn.classList.add('hidden');
+      }
+    });
+    scrollBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Fetch and display data from data.json
+    fetch('data.json')
+      .then(response => response.json())
+      .then(data => {
+        // Hobbies
+        const hobbies = data.filter(item => item.type === 'hobby');
+        const hobbiesList = document.getElementById('hobbies-list');
+        if (hobbiesList) {
+          hobbiesList.innerHTML = hobbies.map(h => `<li>${h.title}</li>`).join('');
         }
-    </script>
-</body>
 
+        // Favorite Books
+        const books = data.filter(item => item.type === 'book');
+        const booksList = document.getElementById('books-list');
+        if (booksList) {
+          booksList.innerHTML = books.map(b => `<li><strong>${b.title}</strong>: ${b.reason}</li>`).join('');
+        }
+
+        // Favorite Websites & Startups
+        const sites = data.filter(item => item.type === 'website' || item.type === 'startup');
+        const sitesList = document.getElementById('sites-list');
+        if (sitesList) {
+          sitesList.innerHTML = sites.map(s => `<li><strong>${s.title}</strong>: ${s.reason}</li>`).join('');
+        }
+      });
+  </script>
+</body>
 </html>
